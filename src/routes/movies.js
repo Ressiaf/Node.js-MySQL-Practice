@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 
-const movies = [ 
+let movies = [ 
     {
         id: 1 ,
         title: "Iron man",
@@ -48,6 +48,11 @@ router.post( "/" , (req , res) => {
     res.json({newMovie})
 } )
 
+router.delete("/:id" ,  (req, res) => {
+    const id = Number(req.params.id)
+    movies = movies.filter( movie => movie.id !== id )
+    res.status(204).end() 
+})
 
 
 
