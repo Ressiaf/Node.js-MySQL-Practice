@@ -18,9 +18,9 @@ app
 
 // Routes
 app
+    .use( "/employees" , employeesRoute)
     .use( "/users" , usersRoute ) 
     .use( "/movies" , moviesRoute )
-    .use( "/employees" , employeesRoute)
     .use( "*" , ( req, res, next ) => {
         res.status(404).send( "404 - not found" )
     } )
