@@ -28,11 +28,11 @@ router.get("/:id" , ( req , res ) => {
 })
 
 router.post("/" , (req, res ) => {
-    const  { id , name , city } = req.body
-    const query = "CALL addOrEditEmployees( ?, ? ,? )" 
-    connection.query(query , [ id , name , city ], ( err, rows , fields ) => {
+    const  { id , name , email } = req.body
+    const query = "CALL addOrEditCustomers( ?, ? ,? )" 
+    connection.query(query , [ id , name , email ], ( err, rows , fields ) => {
             if(!err){
-                res.json( {status : "employee successfully added" } )
+                res.json( {status : "user successfully added" } )
             } else {
                 console.log(err);
             }
@@ -42,12 +42,12 @@ router.post("/" , (req, res ) => {
 
 router.put("/:id" , (req , res ) => {
     const { id } = req.params 
-    const {name , city} = req.body
-    const query = "CALL addOrEditEmployees( ?, ? ,? )"
+    const {name  ,email } = req.body
+    const query = "CALL addOrEditCustomers( ?, ? ,? )"
 
-    connection.query(query ,  [ id , name , city ], ( err, rows , fields ) => {
+    connection.query(query ,  [ id , name , email ], ( err, rows , fields ) => {
         if(!err){
-            res.json( {status : "employee successfully updated" } )
+            res.json( {status : "user successfully updated" } )
         } else {
             console.log(err);
         }

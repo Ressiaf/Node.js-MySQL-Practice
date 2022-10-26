@@ -4,8 +4,9 @@ const router = express.Router()
 
 const connection = require("../database/database.js")
 
+
 router.get("/" , (_req , res ) => {
-    connection.query("SELECT * FROM employees", 
+    connection.query("SELECT * FROM stores", 
     ( err , rows , _fields ) => {
         if (err) {
             console.log(err);
@@ -16,7 +17,7 @@ router.get("/" , (_req , res ) => {
 })
 
 router.get("/:id" , ( req , res ) => {
-    connection.query( "SELECT * FROM employees WHERE id = ?", [req.params.id],
+    connection.query( "SELECT * FROM stores WHERE id = ?", [req.params.id],
     ( err , rows , _fields ) => {
         if(err) {
             console.log( err );
@@ -28,11 +29,10 @@ router.get("/:id" , ( req , res ) => {
 
 router.post("/" , (req, res ) => {
     const  { id , name , city } = req.body
-    const query = "CALL addOrEditEmployees( ?, ? ,? )" 
-
+    const query = "CALL addOrEditStores( ?, ? ,? )" 
     connection.query(query , [ id , name , city ], ( err, rows , fields ) => {
             if(!err){
-                res.json( {status : "employee successfully added" } )
+                res.json( {status : "store successfully added" } )
             } else {
                 console.log(err);
             }
@@ -43,11 +43,10 @@ router.post("/" , (req, res ) => {
 router.put("/:id" , (req , res ) => {
     const { id } = req.params 
     const {name , city} = req.body
-    const query = "CALL addOrEditEmployees( ?, ? ,? )"
-
+    const query = "CALL addOrEditStores( ?, ? ,? )"
     connection.query(query ,  [ id , name , city ], ( err, rows , fields ) => {
         if(!err){
-            res.json( {status : "employee successfully updated" } )
+            res.json( {status : "store successfully updated" } )
         } else {
             console.log(err);
         }
@@ -55,4 +54,5 @@ router.put("/:id" , (req , res ) => {
 })
 
 
-module.exports = router 
+
+module.exports = router
