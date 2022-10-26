@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     database: "empresa",
 })
 
-// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+// ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'escriba su password aqui';
 
 connection.connect( (err) => {
     if(err){
