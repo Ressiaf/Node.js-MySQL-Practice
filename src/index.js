@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const usersRoute = require("./routes/users.js")
 const storesRoute = require("./routes/stores.js")
 const rolesRoute = require("./routes/roles.js")
+const staffRoute = require("./routes/staff.js")
 
 
 //Configuration
@@ -22,6 +23,7 @@ app
     .use( "/users" , usersRoute )   
     .use( "/stores" , storesRoute ) 
     .use("/roles" , rolesRoute )  
+    .use("/staff" , staffRoute)
     .use( "*" , ( req, res, next ) => {
         res.status(404).send( "404 - not found" )
     } )
