@@ -8,7 +8,7 @@ const usersRoute = require("./routes/users.js")
 const storesRoute = require("./routes/stores.js")
 const rolesRoute = require("./routes/roles.js")
 const staffRoute = require("./routes/staff.js")
-
+const categoriesRoute = require("./routes/categories.js")
 
 //Configuration
 app.set( "port" , process.env.PORT || 3000) 
@@ -24,6 +24,7 @@ app
     .use( "/stores" , storesRoute ) 
     .use("/roles" , rolesRoute )  
     .use("/staff" , staffRoute)
+    .use("/categories" , categoriesRoute)
     .use( "*" , ( req, res, next ) => {
         res.status(404).send( "404 - not found" )
     } )
