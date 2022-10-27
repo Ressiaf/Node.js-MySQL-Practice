@@ -6,7 +6,7 @@ const morgan = require('morgan')
 // Routes import
 const usersRoute = require("./routes/users.js")
 const storesRoute = require("./routes/stores.js")
-
+const rolesRoute = require("./routes/roles.js")
 
 
 //Configuration
@@ -20,7 +20,8 @@ app
 // Routes
 app
     .use( "/users" , usersRoute )   
-    .use( "/stores" , storesRoute )   
+    .use( "/stores" , storesRoute ) 
+    .use("/roles" , rolesRoute )  
     .use( "*" , ( req, res, next ) => {
         res.status(404).send( "404 - not found" )
     } )
