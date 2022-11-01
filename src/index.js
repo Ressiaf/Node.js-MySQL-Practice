@@ -9,6 +9,7 @@ const storesRoute = require("./routes/stores.js")
 const rolesRoute = require("./routes/roles.js")
 const staffRoute = require("./routes/staff.js")
 const categoriesRoute = require("./routes/categories.js")
+const stockRoute = require("./routes/stocks.js")
 
 //Configuration
 app.set( "port" , process.env.PORT || 3000) 
@@ -25,7 +26,8 @@ app
     .use("/roles" , rolesRoute )  
     .use("/staff" , staffRoute)
     .use("/categories" , categoriesRoute)
-    .use( "*" , ( req, res, next ) => {
+    .use("/stock" , stockRoute)
+    .use( "*" , ( _req, res, _next ) => {
         res.status(404).send( "404 - not found" )
     } )
 
