@@ -42,7 +42,7 @@ router.post("/" , (req, res ) => {
 router.put("/:id" , (req , res ) => {
     const { id } = req.params 
     const {name} = req.body
-    const query = "CALL addOrEditCategories( ?, ? )"
+    const query = " CALL addOrEditCategories( ?, ? ) "
     connection.query(query ,  [ id , name ] , ( err, rows , fields ) => {
         if(!err){
             res.json( {status : " Category successfully updated " } )
