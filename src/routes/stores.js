@@ -6,7 +6,7 @@ const connection = require("../database/database.js")
 
 
 router.get("/" , (_req , res ) => {
-    connection.query("SELECT * FROM stores", 
+    connection.query("  SELECT * FROM stores ", 
     ( err , rows , _fields ) => {
         if (err) {
             console.log(err);
