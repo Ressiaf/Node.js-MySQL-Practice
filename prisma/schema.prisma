@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(50)
+  products products[]
+}
+
+model customers {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(50)
+  email  String?  @db.VarChar(100)
+  orders orders[]
+}
+
+model products {
+  id             Int              @id @default(autoincrement())
+  name           String           @db.VarChar(50)
+  price          Float            @db.Float
+  categories_id  Int
+  categories     categories       @relation(fields: [categories_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "products_ibfk_1")
+  order_products order_products[]
+  stocks         stocks[]
+
+  @@index([categories_id], map: "categories_id")
+}
+
+model roles {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(50)
+  staff staff[]
+}
+
+model staff {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(50)
+  roles_id Int
+  store_id Int
+  roles    roles    @relation(fields: [roles_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "staff_ibfk_1")
+  stores   stores   @relation(fields: [store_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "staff_ibfk_2")
+  orders   orders[]
+
+  @@index([roles_id], map: "roles_id")
+  @@index([store_id], map: "store_id")
+}
+
+model stores {
+  id     Int      @id @default(autoincrement())
+  name   String   @db.VarChar(50)
+  city   String   @db.VarChar(50)
+  orders orders[]
+  staff  staff[]
+  stocks stocks[]
+}
+
+model stocks {
+  id         Int      @id @default(autoincrement())
+  quantity   Int
+  store_id   Int
+  product_id Int
+  stores     stores   @relation(fields: [store_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "stocks_ibfk_1")
+  products   products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "stocks_ibfk_2")
+
+  @@index([product_id], map: "product_id")
+  @@index([store_id], map: "store_id")
+}
+
+model order_products {
+  id         Int      @id @default(autoincrement())
+  quantity   Int
+  total      Float    @db.Float
+  order_id   Int
+  product_id Int
+  orders     orders   @relation(fields: [order_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_products_ibfk_1")
+  products   products @relation(fields: [product_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "order_products_ibfk_2")
+
+  @@index([order_id], map: "order_id")
+  @@index([product_id], map: "product_id")
+}
+
+model orders {
+  id             Int              @id @default(autoincrement())
+  status         Boolean          @db.Bit(1)
+  store_id       Int
+  staff_id       Int
+  customer_id    Int
+  stores         stores           @relation(fields: [store_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_1")
+  staff          staff            @relation(fields: [staff_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_2")
+  customers      customers        @relation(fields: [customer_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_ibfk_3")
+  order_products order_products[]
+
+  @@index([customer_id], map: "customer_id")
+  @@index([staff_id], map: "staff_id")
+  @@index([store_id], map: "store_id")
+}
