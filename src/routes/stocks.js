@@ -41,7 +41,25 @@ router.get("/:id" , ( req , res ) => {
     })
 })
 
+router.post("/", (req, res) => {
+    prisma.stocks.create({
+        data: req.body
+    }).then(res => {
+        res.send("stock successfully added!")
+    }).catch(err => {
+        res.json(err)
+    })
+})
 
-
-
+router.delete("/:id" , (req , res ) =>{
+    prisma.stock.delete({
+        where: {
+            id:Number(req.params.id)
+        }
+    }).then(res => {
+        res.send("stock successfully deleted!")
+    }).catch(err => {
+        res.json(err)
+    })
+})
 module.exports=router
